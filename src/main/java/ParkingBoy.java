@@ -11,7 +11,7 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
-    public ParkingBoy() {
+    public ParkingBoy() {//没这个不能拓展
     }
 
 
@@ -29,5 +29,6 @@ public class ParkingBoy {
         }
         return parkingService.fetchCar(targetParkingLot, ticket);
     }
+
 }
 

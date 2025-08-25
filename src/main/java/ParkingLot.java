@@ -26,14 +26,9 @@ public class ParkingLot {
         return parkingLotName;
     }
 
-    public void setParkingLotName(String parkingLotName) {
-        this.parkingLotName = parkingLotName;
-    }
 
     public int getOriginal_capacity() {
         return original_capacity;
     }
-    public void setOriginal_capacity(int capacity) {
-        this.original_capacity = capacity;
-    }
+
 }

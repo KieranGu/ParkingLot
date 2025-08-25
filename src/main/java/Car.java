@@ -9,7 +9,4 @@ public class Car {
         return carName;
     }
 
-    public void setCarName(String carName) {
-        this.carName = carName;
-    }
 }
