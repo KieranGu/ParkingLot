@@ -11,13 +11,12 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
+    public ParkingBoy() {
+    }
+
 
     public Message manualParkCar(Car car) {
         ParkingLot targetParkingLot = parkingLots.get(0);
-        for (ParkingLot parkinglot : parkingLots) {
-            if (parkinglot.getCapacity() > targetParkingLot.getCapacity())
-                targetParkingLot = parkinglot;
-        }
         return parkingService.parkCar(targetParkingLot, car);
     }
 
@@ -31,3 +30,4 @@ public class ParkingBoy {
         return parkingService.fetchCar(targetParkingLot, ticket);
     }
 }
+
