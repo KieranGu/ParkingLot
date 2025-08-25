@@ -333,4 +333,23 @@ public class ParkingLotTest {
         //Then
         assertEquals("No available position", message.getResultMsg());
     }
+
+    @Test
+    public void test_given_a_full_parking_lot_and_an_available_parking_lot_and_a_car_and_a_super_boy_when_park_then_success() {
+        //Given
+        ParkingLot parkingLot1=new ParkingLot("parkingLot1",5);
+        ParkingLot parkingLot2=new ParkingLot("parkingLot2",10);
+        parkingLot2.setCapacity(4);
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2));
+        Car car = new Car("myCar");
+        //When
+        SuperParkingBoy superParkingBoy=new SuperParkingBoy("boy",parkingLots);
+        Message message = superParkingBoy.manualParkCarSuper(car);
+        Ticket ticket = message.getTicket();
+        String result = message.getResultMsg();
+        //Then
+        assertEquals("停车成功", result);
+        assertEquals("parkingLot1", ticket.getParkingLotName());
+        assertEquals("myCar", ticket.getCarName());
+    }
 }
