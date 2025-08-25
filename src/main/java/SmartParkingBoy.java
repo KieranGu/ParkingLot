@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SmartParkingBoy extends ParkingBoy{
     private String boyName;
@@ -17,5 +18,15 @@ public class SmartParkingBoy extends ParkingBoy{
                 targetParkingLot = parkinglot;
         }
         return parkingService.parkCar(targetParkingLot, car);
+    }
+    
+    public Message manualFetchCar(Ticket ticket) {
+        String parkingLotName = ticket.getParkingLotName();
+        ParkingLot targetParkingLot = null;
+        for (ParkingLot parkinglot : parkingLots) {
+            if (Objects.equals(parkinglot.getParkingLotName(), parkingLotName))
+                targetParkingLot = parkinglot;
+        }
+        return parkingService.fetchCar(targetParkingLot, ticket);
     }
 }

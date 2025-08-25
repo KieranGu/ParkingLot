@@ -189,7 +189,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void test_given_parking_lot_and_ticket_with_boy_when_fetch_then_success(){
+    public void test_given_parking_lot_and_ticket_with_standard_boy_when_fetch_then_success(){
         //Given
         ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
         ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
@@ -208,7 +208,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void test_given_parking_lot_and_wrong_ticket_with_boy_when_fetch_then_failure(){
+    public void test_given_parking_lot_and_wrong_ticket_with_standard_boy_when_fetch_then_failure(){
         //Given
         ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
         ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
@@ -228,7 +228,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void test_given_parking_lot_and_used_ticket_with_boy_when_fetch_then_failure(){
+    public void test_given_parking_lot_and_used_ticket_with_standard_boy_when_fetch_then_failure(){
         //Given
         ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
         ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
@@ -247,7 +247,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void test_given_two_full_parking_lot_and_ticket_with_boy_when_park_then_failure(){
+    public void test_given_two_full_parking_lot_and_ticket_with_standard_boy_when_park_then_failure(){
         //Given
         ParkingLot parkingLot1 = new ParkingLot("parkingLot1",0);
         ParkingLot parkingLot2 = new ParkingLot("parkingLot2",0);
@@ -261,4 +261,76 @@ public class ParkingLotTest {
         assertEquals("No available position", message.getResultMsg());
     }
 
+    @Test
+    public void test_given_parking_lot_and_ticket_with_smart_boy_when_fetch_then_success(){
+        //Given
+        ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
+        ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2));
+        Car car = new Car("myCar");
+        SmartParkingBoy smartParkingBoy=new SmartParkingBoy("boy",parkingLots);
+        Message message = smartParkingBoy.manualParkCarSmart(car);
+        Ticket ticket = message.getTicket();
+
+        //When
+        Message resMessage = smartParkingBoy.manualFetchCar(ticket);
+        String result2 = resMessage.getResultMsg();
+        //Then
+        assertEquals("取车成功", result2);
+        assertEquals(car,resMessage.getCar());
+    }
+
+    @Test
+    public void test_given_parking_lot_and_wrong_ticket_with_smart_boy_when_fetch_then_failure(){
+        //Given
+        ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
+        ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2));
+        Car car = new Car("myCar");
+        SmartParkingBoy smartParkingBoy=new SmartParkingBoy("boy",parkingLots);
+        Message message = smartParkingBoy.manualParkCarSmart(car);
+        Ticket ticket = message.getTicket();
+
+        Ticket wrongTicket = new Ticket(ticket.getParkingLotName(), car.getCarName(), 12345678);
+
+        //When
+        Message resMessage = smartParkingBoy.manualFetchCar(wrongTicket);
+        String result = resMessage.getResultMsg();
+        //Then
+        assertEquals("Unrecognized parking ticket.", result);
+    }
+
+    @Test
+    public void test_given_parking_lot_and_used_ticket_with_smart_boy_when_fetch_then_failure(){
+        //Given
+        ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
+        ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2));
+        Car car = new Car("myCar");
+        SmartParkingBoy smartParkingBoy=new SmartParkingBoy("boy",parkingLots);
+        Message message = smartParkingBoy.manualParkCarSmart(car);
+        Ticket ticket = message.getTicket();
+
+        //When
+        Message resMessage1 = smartParkingBoy.manualFetchCar(ticket);
+        Message resMessage2 = smartParkingBoy.manualFetchCar(ticket);
+        String result2 = resMessage2.getResultMsg();
+        //Then
+        assertEquals("Unrecognized parking ticket.", result2);
+    }
+
+    @Test
+    public void test_given_two_full_parking_lot_and_ticket_with_smart_boy_when_park_then_failure(){
+        //Given
+        ParkingLot parkingLot1 = new ParkingLot("parkingLot1",0);
+        ParkingLot parkingLot2 = new ParkingLot("parkingLot2",0);
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2));
+        Car car = new Car("myCar");
+        //When
+        SmartParkingBoy smartParkingBoy=new SmartParkingBoy("boy",parkingLots);
+        Message message = smartParkingBoy.manualParkCarSmart(car);
+
+        //Then
+        assertEquals("No available position", message.getResultMsg());
+    }
 }
