@@ -352,4 +352,23 @@ public class ParkingLotTest {
         assertEquals("parkingLot1", ticket.getParkingLotName());
         assertEquals("myCar", ticket.getCarName());
     }
+
+    @Test
+    public void test_given_parking_lot_and_ticket_with_super_boy_when_fetch_then_success(){
+        //Given
+        ParkingLot parkingLot1 = new ParkingLot("parkingLot1");
+        ParkingLot parkingLot2 = new ParkingLot("parkingLot2");
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2));
+        Car car = new Car("myCar");
+        SuperParkingBoy superParkingBoy=new SuperParkingBoy("boy",parkingLots);
+        Message message = superParkingBoy.manualParkCarSuper(car);
+        Ticket ticket = message.getTicket();
+
+        //When
+        Message resMessage = superParkingBoy.manualFetchCar(ticket);
+        String result2 = resMessage.getResultMsg();
+        //Then
+        assertEquals("取车成功", result2);
+        assertEquals(car,resMessage.getCar());
+    }
 }
