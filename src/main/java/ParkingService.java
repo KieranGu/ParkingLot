@@ -50,7 +50,8 @@ public class ParkingService {
             return new Message(NO_PARKING_LOT);
         }
         int ticketOid = ticket.getTicketOid();
-        if (!hashMap.containsKey(ticketOid)) {
+        if (!hashMap.containsKey(ticketOid)||
+                !Objects.equals(parkingLot.getParkingLotName(), ticket.getParkingLotName())) {
             return new Message(WRONG_TICKET);
         }
         if (!hashMap.get(ticketOid)) {
